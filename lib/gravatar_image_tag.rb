@@ -13,12 +13,13 @@ module GravatarImageTag
   end
 
   class Configuration
-     attr_accessor :default_image, :filetype, :include_size_attributes,
-       :rating, :size, :secure
+    attr_accessor :default_image, :filetype, :include_size_attributes,
+      :rating, :size, :secure, :pixel_density
 
-     def initialize
-        @include_size_attributes = true
-     end
+    def initialize
+      @include_size_attributes = true
+      @pixel_density = 1
+    end
   end
 
   def self.included(base)
@@ -67,6 +68,7 @@ module GravatarImageTag
       options[:alt] ||= 'Gravatar'
       if GravatarImageTag.configuration.include_size_attributes
         size = GravatarImageTag::gravatar_options(gravatar_overrides)[:size] || 80
+        size = size / GravatarImageTag.configuration.pixel_density
         options[:height] = options[:width] = size.to_s
       end
 
