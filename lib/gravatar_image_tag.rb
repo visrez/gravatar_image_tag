@@ -120,7 +120,7 @@ module GravatarImageTag
 
     def self.value_cleaner(value)
       value = value.to_s
-      URI.escape(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+      CGI.escape(value)
     end
 
 end
